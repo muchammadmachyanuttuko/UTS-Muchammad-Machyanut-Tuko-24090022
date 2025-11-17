@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Page</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #fff;
+        display: flex;
+        height: 100vh;
+        overflow-x: hidden;
+    }
+
+    .left {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-right: 1px solid #ddd;
+        background: #fafafa;
+    }
+
+    .left img {
+        width: 70%;
+        opacity: 0.9;
+    }
+
+    .right {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 80px;
+    }
+
+    h1 {
+        font-size: 32px;
+        font-weight: 600;
+        margin-bottom: 30px;
+    }
+
+    .input-group {
+        position: relative;
+        margin-bottom: 18px;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 14px 45px 14px 45px;
+        font-size: 15px;
+        border: 1px solid #dcdcdc;
+        border-radius: 7px;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    .input-group input:focus {
+        border-color: #508CFF;
+        box-shadow: 0 0 4px rgba(80,140,255,0.5);
+    }
+
+    .input-icon {
+        position: absolute;
+        top: 50%;
+        left: 14px;
+        transform: translateY(-50%);
+        width: 20px;
+        opacity: 0.7;
+    }
+
+    .toggle-eye {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 22px;
+        cursor: pointer;
+        opacity: 0.7;
+    }
+
+    .toggle-eye:hover {
+        opacity: 1;
+    }
+
+    .forgot {
+        text-align: right;
+        margin-bottom: 25px;
+        font-size: 14px;
+        color: #555;
+        cursor: pointer;
+    }
+
+    .login-btn {
+        width: 100%;
+        background: #007BFF;
+        color: #fff;
+        padding: 14px;
+        font-size: 16px;
+        border-radius: 7px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: 0.25s ease;
+    }
+
+    .login-btn img {
+        width: 22px;
+    }
+
+    .login-btn:hover {
+        background: #0066d8;
+        transform: scale(1.02);
+    }
+
+    .login-btn:active {
+        transform: scale(0.96);
+        background: #005fcc;
+    }
+
+    .separator {
+        display: flex;
+        align-items: center;
+        margin: 25px 0;
+    }
+
+    .separator div {
+        flex: 1;
+        height: 1px;
+        background: #ccc;
+    }
+
+    .separator span {
+        margin: 0 12px;
+        color: #777;
+    }
+
+    .social-container {
+        display: flex;
+        gap: 15px;
+    }
+
+    .social-btn {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 7px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        font-size: 15px;
+        background: #fff;
+        transition: 0.25s ease;
+    }
+
+    .social-btn img {
+        width: 20px;
+    }
+
+    .social-btn:hover {
+        background: #f2f2f2;
+        transform: scale(1.02);
+    }
+
+    .social-btn:active {
+        transform: scale(0.95);
+        background: #e6e6e6;
+    }
+
+    .signup-text {
+        margin-top: 25px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .signup-text span {
+        color: #007BFF;
+        cursor: pointer;
+    }
+</style>
+
+</head>
+<body>
+
+<div class="left">
+    <img src="WhatsApp Image 2025-11-17 at 19.25.45_4f383c63.jpg" alt="illustration">
+</div>
+
+<div class="right">
+    <h1>Welcome Back!</h1>
+
+    <div class="input-group">
+        <img class="input-icon" src="https://cdn-icons-png.flaticon.com/512/561/561127.png">
+        <input type="text" id="email" placeholder="Email Address">
+    </div>
+
+    <div class="input-group">
+        <img class="input-icon" src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png">
+        <input type="password" id="password" placeholder="Password">
+        <img class="toggle-eye" id="eye"
+             src="https://cdn-icons-png.flaticon.com/512/709/709612.png"
+             onclick="togglePassword()">
+    </div>
+
+    <div class="forgot">Forgot Password?</div>
+
+    <button class="login-btn" onclick="login()">
+        <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png">
+        Login
+    </button>
+
+    <div class="separator">
+        <div></div><span>Or</span><div></div>
+    </div>
+
+    <div class="social-container">
+        <div class="social-btn">
+            <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png">
+            Google
+        </div>
+
+        <div class="social-btn">
+            <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png">
+            Facebook
+        </div>
+    </div>
+
+    <div class="signup-text">
+        Don't have an account? <span>Sign Up</span>
+    </div>
+</div>
+
+<script>
+
+function togglePassword() {
+    let pwd = document.getElementById("password");
+    let eye = document.getElementById("eye");
+
+    if (pwd.type === "password") {
+        pwd.type = "text";
+        eye.src = "https://cdn-icons-png.flaticon.com/512/159/159604.png"; 
+    } else {
+        pwd.type = "password";
+        eye.src = "https://cdn-icons-png.flaticon.com/512/709/709612.png";
+    }
+}
+
+function login() {
+    let email = document.getElementById("email").value.trim();
+    let pass = document.getElementById("password").value.trim();
+
+    if (email === "" || pass === "") {
+        alert("Email dan Password tidak boleh kosong!");
+        return;
+    }
+
+    if (!email.endsWith("@gmail.com")) {
+        alert("Email wajib menggunakan @gmail.com");
+        return;
+    }
+
+    alert("Login berhasil!");
+    window.location.href = "dashboard.html";
+}
+</script>
+
+</body>
+</html

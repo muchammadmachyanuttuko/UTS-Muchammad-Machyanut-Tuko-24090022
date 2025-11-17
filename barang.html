@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Produk</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 230px;
+            background: #1f2937;
+            color: white;
+            height: 100vh;
+            padding: 20px 0;
+            position: fixed;
+        }
+
+        .menu-title {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #9ca3af;
+        }
+
+        .menu-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .menu-item a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 15px;
+            transition: .3s;
+        }
+
+        .menu-item.active a,
+        .menu-item a:hover {
+            background: #374151;
+            color: white;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .main {
+            margin-left: 230px;
+            padding: 30px;
+            width: calc(100% - 230px);
+        }
+
+        h1 {
+            margin: 0 0 20px 0;
+            font-size: 28px;
+        }
+
+        .content-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table thead {
+            background: #3b82f6;
+            color: white;
+        }
+
+        table th, td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        table tr:hover {
+            background: #f0f4ff;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn-edit { background: #10b981; }
+        .btn-delete { background: #ef4444; }
+        .btn-edit:hover, .btn-delete:hover { opacity: 0.8; }
+
+        /* POPUP EDIT */
+        .popup-bg {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 350px;
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .popup-box input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .popup-buttons {
+            text-align: right;
+        }
+
+        .btn-save {
+            background: #3b82f6;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-cancel {
+            background: #6b7280;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="menu-title">Menu</div>
+        <ul class="menu-list">
+            <li class="menu-item">
+                <a href="dashboard.html">🏠 Dashboard</a>
+            </li>
+            <li class="menu-item active">
+                <a href="barang.html">📦 Produk</a>
+            </li>
+            <li class="menu-item"><a href="#">💲 Transaksi</a></li>
+            <li class="menu-item"><a href="#">📊 Statistik</a></li>
+            <li class="menu-item"><a href="#">⚙ Pengaturan</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <h1>Data Produk</h1>
+
+        <div class="content-card">
+            <table id="productTable">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Produk</th>
+                        <th>Harga</th>
+                        <th>Stock</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="popup-bg" id="popup">
+        <div class="popup-box">
+            <h3>Edit Produk</h3>
+
+            <input type="text" id="editName" placeholder="Nama Produk">
+            <input type="number" id="editPrice" placeholder="Harga">
+            <input type="number" id="editStock" placeholder="Stock">
+
+            <div class="popup-buttons">
+                <button class="btn-cancel" onclick="closePopup()">Batal</button>
+                <button class="btn-save" onclick="saveEdit()">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    let products = [
+        { id: 1, name: "Kopi Gayo", price: 25000, stock: 50 },
+        { id: 2, name: "Teh Hitam", price: 18000, stock: 30 },
+        { id: 3, name: "Gula Aren", price: 12000, stock: 70 }
+    ];
+
+    let editID = null;
+
+    function loadTable() {
+        const tbody = document.querySelector("#productTable tbody");
+        tbody.innerHTML = "";
+
+        products.forEach((p, index) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${p.name}</td>
+                    <td>Rp ${p.price.toLocaleString()}</td>
+                    <td>${p.stock}</td>
+                    <td>
+                        <button class="btn-edit" onclick="openEdit(${p.id})">Edit</button>
+                        <button class="btn-delete" onclick="deleteProduct(${p.id})">Hapus</button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    function deleteProduct(id) {
+        products = products.filter(p => p.id !== id);
+        loadTable();
+    }
+
+    function openEdit(id) {
+        editID = id;
+        const p = products.find(p => p.id === id);
+
+        document.getElementById("editName").value = p.name;
+        document.getElementById("editPrice").value = p.price;
+        document.getElementById("editStock").value = p.stock;
+
+        document.getElementById("popup").style.display = "flex";
+    }
+
+    function closePopup() {
+        document.getElementById("popup").style.display = "none";
+    }
+
+    function saveEdit() {
+        const p = products.find(p => p.id === editID);
+
+        p.name = document.getElementById("editName").value;
+        p.price = Number(document.getElementById("editPrice").value);
+        p.stock = Number(document.getElementById("editStock").value);
+
+        closePopup();
+        loadTable();
+    }
+
+    loadTable();
+</script>
+
+</body>
+</html>

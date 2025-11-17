@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 230px;
+            background: #1f2937;
+            color: white;
+            height: 100vh;
+            padding: 20px 0;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+
+        .menu-title {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #9ca3af;
+        }
+
+        .menu-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .menu-item a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .menu-item a:hover,
+        .menu-item.active a {
+            background: #374151;
+            color: white;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .main {
+            margin-left: 230px;
+            padding: 30px;
+            width: calc(100% - 230px);
+        }
+
+        h1 {
+            margin: 0 0 20px 0;
+            font-size: 28px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 25px;
+            width: 100%;
+        }
+
+        .card {
+            flex: 1;
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.10);
+            transition: 0.25s;
+            cursor: pointer;
+            border-left: 6px solid #3b82f6;
+        }
+
+        .card:hover {
+            transform: scale(1.04);
+            box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-size: 17px;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .card-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="menu-title">Menu</div>
+
+        <ul class="menu-list">
+            <li class="menu-item active">
+                <a href="dashboard.html"><span class="icon">🏠</span> Dashboard</a>
+            </li>
+            <li class="menu-item">
+                <a href="barang.html"><span class="icon">📦</span> Produk</a>
+            </li>
+            <li class="menu-item">
+                <a href="#"><span class="icon">💲</span> Transaksi</a>
+            </li>
+            <li class="menu-item">
+                <a href="#"><span class="icon">📊</span> Statistik</a>
+            </li>
+            <li class="menu-item">
+                <a href="#"><span class="icon">⚙</span> Pengaturan</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <h1>Dashboard</h1>
+
+        <div class="stats">
+            <div class="card">
+                <div class="card-title">Total Produk</div>
+                <div class="card-value">120</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Total Transaksi</div>
+                <div class="card-value">87</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Total Pendapatan</div>
+                <div class="card-value">Rp 12.500.000</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
